@@ -6,7 +6,7 @@ const cloudinaryUpload = async (files) => {
 
   for (let file of files.avatar) {
     const result = await cloudinary.uploader.upload(file.path, {
-      folder: "techupth/demo-file-uploading",
+      folder: "nam",
       type: "private",
     });
     fileUrl.push({

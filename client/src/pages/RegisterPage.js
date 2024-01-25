@@ -12,7 +12,7 @@ function RegisterPage() {
     const uniqueId = Date.now();
     setAvatars({
       ...avatars,
-      [uniqueId]: event.target.file[0],
+      [uniqueId]: event.target.files[0],
     });
   };
 
@@ -20,13 +20,19 @@ function RegisterPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = {
-      username,
-      password,
-      firstName,
-      lastName,
-    };
-    register(data);
+
+    const formData = new FormData();
+
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+
+    for (let avatarKey in avatars) {
+      formData.append("avatar", avatars[avatarKey]);
+    }
+
+    register(formData);
   };
 
   const handleRemoveImage = (event, avatarKey) => {
@@ -34,19 +40,6 @@ function RegisterPage() {
     delete avatars[avatarKey];
     setAvatars({ ...avatars });
   };
-
-  const formData = new FormData();
-
-  formData.append("username", username);
-  formData.append("password", password);
-  formData.append("firstName", firstName);
-  formData.append("lastName", lastName);
-
-  for (let avatarKey in avatars) {
-    formData.append("avatar", avatars[avatarKey]);
-  }
-
-  register(formData);
 
   return (
     <div className="register-form-container">

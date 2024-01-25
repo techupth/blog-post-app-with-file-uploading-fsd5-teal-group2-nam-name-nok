@@ -21,8 +21,6 @@ authRouter.post("/register", avatarUpload, async (req, res) => {
   const avatarUrl = await cloudinaryUpload(req.files);
   user["avatars"] = avatarUrl;
 
-  await cloudinaryUpload(req.files);
-
   const salt = await bcrypt.genSalt(10);
   // now we set user password to hashed password
   user.password = await bcrypt.hash(user.password, salt);
